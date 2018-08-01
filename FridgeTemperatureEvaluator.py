@@ -27,29 +27,34 @@ def load_json_file():
     return sorted_data
 
 
-#
-# def calculate_mean():
-#
+def calculate_average(json_file_as_dictionary):
+    for key, value in json_file_as_dictionary.items():
+        sum_of_values = sum(value)
+        num_of_values = len(value)
+        average = sum_of_values / num_of_values
+        print(key, average)
+
+
 #
 # # calculate the mode for each Id
-# def calculate_median():
+# def calculate_median(jason_file_as_list):
 #
 #
 # # calculate the median for each Id
-# def calculate_mode():
+# def calculate_mode(jason_file_as_list):
 #
 #
 # # calculate the mode for each Id
 #
-# def write_json_format():
-#
+# def write_json_format(jason_file_as_dictionary):
+
 
 def main():
-    json_file_as_list = load_json_file()
-    # calculate_mean(json_file_as_list)
-    # calculate_median(json_file_as_list)
-    # calculate_mode(json_file_as_list)
-    # write_json_format()
-
+    json_file_as_dictionary = load_json_file()
+    calculate_average(json_file_as_dictionary)
+    # calculate_median(json_file_as_dictionary)
+    # calculate_mode(json_file_as_dictionary)
+    # write_json_format(json_file_as_dictionary)
+    #
 
 main()

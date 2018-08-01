@@ -1,5 +1,3 @@
-import json
-
 
 def load_json_file():
     sorted_data = {}
@@ -32,6 +30,7 @@ def calculate_average(json_file_as_dictionary):
         sum_of_values = sum(value)
         num_of_values = len(value)
         average = sum_of_values / num_of_values
+        average = round(average, 2)
         print(key, average)
         #       need to consider how to return this either as a dictionary or variable
 
@@ -43,11 +42,16 @@ def calculate_median(json_file_as_dictionary):
         array_length = len(value)
         remainder = array_length % 2
         if remainder == 1:
-            print(value[array_length // 2])
-            return value[array_length // 2]
+            median_number = array_length// 2
+            median_number = round(median_number, 2)
+            print(key, value[median_number])
+            return key, value[median_number]
         else:
+            median_number = (value[array_length //2] + value[array_length // 2 - 1]) / 2
+            median_number = round(median_number, 2)
+            print(key, median_number)
+
             # find number on either side of this position -1 and +1 then add the 2 values together and divide
-            print("help")
 
 
 # calculate the median for each Id

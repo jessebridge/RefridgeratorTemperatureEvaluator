@@ -33,14 +33,24 @@ def calculate_average(json_file_as_dictionary):
         num_of_values = len(value)
         average = sum_of_values / num_of_values
         print(key, average)
+        #       need to consider how to return this either as a dictionary or variable
 
 
-#
-# # calculate the mode for each Id
-# def calculate_median(jason_file_as_list):
-#
-#
-# # calculate the median for each Id
+def calculate_median(json_file_as_dictionary):
+    for key, value in json_file_as_dictionary.items():
+        # sort values into smallest to largest
+        value.sort()
+        array_length = len(value)
+        remainder = array_length % 2
+        if remainder == 1:
+            print(value[array_length // 2])
+            return value[array_length // 2]
+        else:
+            # find number on either side of this position -1 and +1 then add the 2 values together and divide
+            print("help")
+
+
+# calculate the median for each Id
 # def calculate_mode(jason_file_as_list):
 #
 #
@@ -52,9 +62,10 @@ def calculate_average(json_file_as_dictionary):
 def main():
     json_file_as_dictionary = load_json_file()
     calculate_average(json_file_as_dictionary)
-    # calculate_median(json_file_as_dictionary)
+    calculate_median(json_file_as_dictionary)
     # calculate_mode(json_file_as_dictionary)
     # write_json_format(json_file_as_dictionary)
     #
+
 
 main()

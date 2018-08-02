@@ -1,11 +1,25 @@
 def convert_data(json_object_data):
-    fridge_data_as_list = sort_json_array(json_object_data, "id", "temperature")
-    return json_array_output(fridge_data_as_list)
+    """
+    Passes Json array to be sorted and then run calculations
+
+    The Json array is passed to this function and then it is passed to the sort_jason_array
+    function where it is then returned as a dictionary containing a list for each id and then
+    it is passed to the json_array_output function which is then returned to main as a Json list.
+    The main idea was to have the data in an easy to read format that could be easily used in the following
+    calculation methods such as median, mode and average, whereas if the data was not formatted it would require
+    further steps to gather all data and compute the outputs for each id
+    (eg. getting all temperatures for the fridge with id 'a').
+    :param json_object_data: Json Array
+    :return: Json Array
+    """
+    sorted_fridge_data = sort_json_array(json_object_data, "id", "temperature")
+    print(sorted_fridge_data)
+    return json_array_output(sorted_fridge_data)
 
 
-def json_array_output(fridge_data_as_list):
+def json_array_output(sorted_fridge_data):
     output_as_array = []
-    for key, value in fridge_data_as_list.items():
+    for key, value in sorted_fridge_data.items():
         average = round(get_average(value), 2)
         median = round(get_median(value), 2)
         mode = get_mode(value)
@@ -14,8 +28,15 @@ def json_array_output(fridge_data_as_list):
 
 
 def sort_json_array(json_object_data, id, key):
+    """
+    Sorts the data with the same id into
+
+    :param json_object_data:
+    :param id: String
+    :param key: String
+    :return: Dictionary
+    """
     sorted_data = {}
-    # Loop through each item in the array
     for element in json_object_data:
         if element[id] not in sorted_data.keys():
             sorted_data[element[id]] = [element[key]]
@@ -24,38 +45,38 @@ def sort_json_array(json_object_data, id, key):
     return sorted_data
 
 
-def get_average(fridge_data_as_list):
-    num_of_values = len(fridge_data_as_list)
+def get_average(sorted_fridge_data):
+    num_of_values = len(sorted_fridge_data)
     if num_of_values == 0:
         return None
     else:
-        sum_of_values = sum(fridge_data_as_list)
-        num_of_values = len(fridge_data_as_list)
+        sum_of_values = sum(sorted_fridge_data)
+        num_of_values = len(sorted_fridge_data)
         average = sum_of_values / num_of_values
         return average
 
 
-def get_median(fridge_data_as_list):
-    array_length = len(fridge_data_as_list)
+def get_median(sorted_fridge_data):
+    array_length = len(sorted_fridge_data)
     if array_length == 0:
         return None
     else:
-        fridge_data_as_list.sort()
+        sorted_fridge_data.sort()
     remainder = array_length % 2
     if remainder == 1:
-        median_number = fridge_data_as_list[array_length // 2]
+        median_number = sorted_fridge_data[array_length // 2]
     else:
         median_number = (
-                            fridge_data_as_list[array_length // 2] + fridge_data_as_list[array_length // 2 - 1]) / 2
+                            sorted_fridge_data[array_length // 2] + sorted_fridge_data[array_length // 2 - 1]) / 2
     return median_number
 
 
-def get_mode(fridge_data_as_list):
-    if len(fridge_data_as_list) == 0:
+def get_mode(sorted_fridge_data):
+    if len(sorted_fridge_data) == 0:
         return None
     else:
         calc = {}
-        for item in fridge_data_as_list:
+        for item in sorted_fridge_data:
             if item not in calc.keys():
                 calc[item] = 0
             else:
@@ -66,6 +87,15 @@ def get_mode(fridge_data_as_list):
 
 
 def main():
+    """
+    The main function in this instance is simply calling the convert data function
+
+    In this instance the main function is used to simply pass a Json array to the
+    convert data function which then handles all of the conversion of the data
+    and returns a Json array. Most of the work is handled by the convert data function
+    so that if it were implemented into an up and running code base it could simply be
+    called with the required arguments passed in, this also allows the function to be tested.
+    """
     json_object_data = [{"id": "a", "timestamp": 1509493641, "temperature": 3.53},
                         {"id": "b", "timestamp": 1509493642, "temperature": 4.13},
                         {"id": "c", "timestamp": 1509493643, "temperature": 3.96},

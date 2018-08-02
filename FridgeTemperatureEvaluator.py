@@ -5,7 +5,9 @@ def convert_data(json_array):
     :param json_array: Json Array
     :return: Json Array
     """
+    # create new dictionary with the id as key and temperature as values
     sorted_fridge_data = sort_json_array(json_array, "id", "temperature")
+    # return Json array after all calculations are done
     return json_array_output(sorted_fridge_data)
 
 
@@ -17,8 +19,9 @@ def json_array_output(sorted_fridge_data):
     :return: Json array
     """
     output_as_array = []
-    #loop through each key and value
+    # loop through each key and value and calculate the required answers
     for key, value in sorted_fridge_data.items():
+        # round each value down using round function
         average = round(get_average(value), 2)
         median = round(get_median(value), 2)
         mode = get_mode(value)
@@ -59,6 +62,7 @@ def get_average(sorted_fridge_data):
     if num_of_values == 0:
         return None
     else:
+        # divide sum of values by number of values
         sum_of_values = sum(sorted_fridge_data)
         num_of_values = len(sorted_fridge_data)
         average = sum_of_values / num_of_values
@@ -77,11 +81,15 @@ def get_median(sorted_fridge_data):
     if array_length == 0:
         return None
     else:
+        # sort array into ascending order
         sorted_fridge_data.sort()
         remainder = array_length % 2
+        # if odd number
         if remainder == 1:
             median_number = sorted_fridge_data[array_length // 2]
+        # if even number
         else:
+            # find the middle position in the array round it down, add the position left of it and then divide by 2
             median_number = (sorted_fridge_data[array_length // 2] + sorted_fridge_data[array_length // 2 - 1]) / 2
         return median_number
 
@@ -93,16 +101,22 @@ def get_mode(sorted_fridge_data):
     :param sorted_fridge_data:
     :return: mode as array
     """
+    # handle empty array
     if len(sorted_fridge_data) == 0:
         return None
     else:
         calc = {}
+        # loop through the array
         for item in sorted_fridge_data:
+            # if key isn't stored stored in the calc dictionary, create one and add 0 as the value
             if item not in calc.keys():
                 calc[item] = 0
+            # if the key is already in the calc dictionary add 1 to the value
             else:
                 calc[item] += 1
+        # find the maximum key value in the dictionary
         maximum_value = max(calc.values())
+        # create an array of the keys that have a value equal to the maximum value
         mode = [key for key in calc.keys() if calc[key] == maximum_value]
         return mode
 

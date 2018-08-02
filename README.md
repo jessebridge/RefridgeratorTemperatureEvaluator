@@ -2,7 +2,7 @@
 
 ## Assumptions
 
-### The main assumption two assumptions for this project were:
+### The main two assumptions for this project were:
 * The output was only required to be in the same format as a Json array and not output as a Json object
 * The only inputs are going to be Json arrays in the same form as the example given on the task sheet and not reading
 from Json objects

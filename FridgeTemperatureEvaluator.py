@@ -1,18 +1,16 @@
 def convert_data(json_object_data):
-    json_file_as_dictionary = load_json_file(json_object_data)
-    for key, value in json_file_as_dictionary.items():
+    fridge_data_as_list = sort_json_array(json_object_data)
+    for key, value in fridge_data_as_list.items():
         print(key, value)
         average = round(get_average(value), 2)
         median = round(get_median(value), 2)
-        print("median below")
-        print(median)
+        mode = get_mode(value)
 
-    get_mode(json_file_as_dictionary)
-    # final_result = write_json_format(json_file_as_dictionary)
-    # return final_result
+        # final_result = write_json_format(fridge_data_as_list)
+        # return final_result
 
 
-def load_json_file(json_object_data):
+def sort_json_array(json_object_data):
     sorted_data = {}
     # Loop through each item in the array
     for element in json_object_data:
@@ -23,38 +21,35 @@ def load_json_file(json_object_data):
     return sorted_data
 
 
-def get_average(json_file_as_dictionary):
-    for value in json_file_as_dictionary:
-        sum_of_values = sum(json_file_as_dictionary)
-        num_of_values = len(json_file_as_dictionary)
-        average = sum_of_values / num_of_values
+def get_average(fridge_data_as_list):
+    sum_of_values = sum(fridge_data_as_list)
+    num_of_values = len(fridge_data_as_list)
+    average = sum_of_values / num_of_values
     return average
 
 
-def get_median(json_file_as_dictionary):
-    json_file_as_dictionary.sort()
-    array_length = len(json_file_as_dictionary)
+def get_median(fridge_data_as_list):
+    fridge_data_as_list.sort()
+    array_length = len(fridge_data_as_list)
     remainder = array_length % 2
     if remainder == 1:
-        median_number = json_file_as_dictionary[array_length // 2]
+        median_number = fridge_data_as_list[array_length // 2]
     else:
-        median_number = (json_file_as_dictionary[array_length // 2] + json_file_as_dictionary[array_length // 2 - 1]) / 2
+        median_number = (
+                            fridge_data_as_list[array_length // 2] + fridge_data_as_list[array_length // 2 - 1]) / 2
     return median_number
 
-# find number on either side of this position -1 and +1 then add the 2 values together and divide
 
-
-def get_mode(json_file_as_dictionary):
-    for key, value in json_file_as_dictionary.items():
-        calc = {}
-        for item in value:
-            if item not in calc.keys():
-                calc[item] = 0
-            else:
-                calc[item] += 1
-        maximum_value = max(calc.values())
-        modes = [key for key in calc.keys() if calc[key] == maximum_value]
-        print(key, modes)
+def get_mode(fridge_data_as_list):
+    calc = {}
+    for item in fridge_data_as_list:
+        if item not in calc.keys():
+            calc[item] = 0
+        else:
+            calc[item] += 1
+    maximum_value = max(calc.values())
+    mode = [key for key in calc.keys() if calc[key] == maximum_value]
+    return mode
 
 
 def main():

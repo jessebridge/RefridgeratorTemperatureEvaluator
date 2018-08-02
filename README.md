@@ -52,9 +52,10 @@ function where it is then returned as a dictionary containing a list for each id
 it is passed to the json_array_output function which is then returned to main as a Json list.
 The main idea was to have the data in an easy to read format that could be easily used in the following
 calculation methods such as median, mode and average, whereas if the data was not formatted it would require
-further steps to gather all data and compute the outputs for each id
+further steps to gather all data and compute the outputs for each id.
+```
 (eg. getting all temperatures for the fridge with id 'a').
-
+```
 ### sort_json_array()
 The sort_json_array function takes in a Json array, a string as the id and a string as the key. The initial design
 for the method only required the Json array and would statically implement what id and key was required, however

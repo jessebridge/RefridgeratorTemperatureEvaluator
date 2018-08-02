@@ -1,4 +1,4 @@
-# Refridgerator Temperature Evaluator
+# Refrigerator Temperature Evaluator
 
 ### Assumptions
 
@@ -41,7 +41,7 @@ convert_data() needs to be called from another function passing in a Json Array 
 ### Explanation of Functions
 
 
-#### json_array_output
+#### json_array_output()
 
 * Takes in the sorted fridge data which goes through a for loop and runs all of the calculations for each key and their
 values one key at a time

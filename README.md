@@ -1,8 +1,8 @@
 # Refridgerator Temperature Evaluator
 
-##Explanation of Functions
+###Explanation of Functions
 
-### json_array_output
+#### json_array_output
 The json_array_output function takes the sorted fridge data and puts it through a for loop which runs
 all of the calculations for each key and their values. The for loop gets the all of values for 1 key at a time as an array and
 passes them to the calculation functions, which then append the id and the results for each function to an empty array, it then

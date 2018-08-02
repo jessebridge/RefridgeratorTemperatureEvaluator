@@ -1,8 +1,8 @@
 # Refridgerator Temperature Evaluator
 
-## Assumptions
+### Assumptions
 
-### The main two assumptions for this project were:
+#### The main two assumptions for this project were:
 * The output was only required to be in the same format as a Json array and not output as a Json object
 * The only inputs are going to be Json arrays in the same form as the example given on the task sheet and not reading
 from Json objects
@@ -27,71 +27,73 @@ from Json objects
                   {"id": "b", "timestamp": 1510128115, "temperature": 3.88}]
 ```
 
-## How to Run the Code
+### How to Run the Code
+
 To run the program using pycharm just simply run the application, it already has a Json Array passed in through main to
 the functions so it will return and print out the correct output of the calculations for each fridge id.
 
 However if the code was to be implemented into an existing code base the main function can be removed and then the
 convert_data() needs to be called from another function passing in a Json Array for it to return a new Json Array.
 
-## How to Test the Code
+### How to Test the Code
 
 
-## Explanation of Functions
+### Explanation of Functions
 
-### json_array_output
-The json_array_output function takes the sorted fridge data and puts it through a for loop which runs
-all of the calculations for each key and their values. The for loop gets the all of values for 1 key at a time as an array and
-passes them to the calculation functions, which then append the id and the results for each function to an empty array, it then
-repeats this loop for each key in the dictionary from the sorted fridge data. The results that are returned are then rounded to
-2nd decimal point as specified here so that the math functions were seperated to doing only math.
 
-### convert_data()
-The Json array is passed to this function and then it is passed to the sort_jason_array
-function where it is then returned as a dictionary containing a list for each id and then
-it is passed to the json_array_output function which is then returned to main as a Json list.
-The main idea was to have the data in an easy to read format that could be easily used in the following
-calculation methods such as median, mode and average, whereas if the data was not formatted it would require
-further steps to gather all data and compute the outputs for each id. Json array is the expected input value and also
-returns a Json array with the calculations completed.
+#### json_array_output
+
+* Takes in the sorted fridge data which goes through a for loop and runs all of the calculations for each key and their
+values one key at a time
+* The results from the calculations are then rounded to 2nd decimal point as specified and then appended to an empty
+Json array with their specific ids
+
+
+#### convert_data()
+
+* The Json array is passed in to this function and then is passed to sort_json_array
+* The sort_json_array returns a dictionary containing a list for each id and the values related to these keys
+* The dictionary is then passed to the json_array_output function which does all of the calculations and returns
+a Json array for main to print
+
+
+#### sort_json_array()
+
+* The initial design for the method only required the Json array and would statically implement the id and key, however
+after some refinement i found that i could create this function to be able to be used for other sets of numerical data
+* The key and id are now passed in as strings to this function along with the Json array
+* The expected output is a dictionary
 ```
-(eg. getting all temperatures for the fridge with id 'a').
+E.g. "timestamp" could be passed in instead of "temperature" as the key, so now it will only use the timestamp
+data instead of temperature
 ```
-### sort_json_array()
-The sort_json_array function takes in a Json array, a string as the id and a string as the key. The initial design
-for the method only required the Json array and would statically implement what id and key was required, however
-after some refinement i found that i could create this function to be able to be used for other sets of numerical
-data. The id and key are now passed in as strings so that in future this function could be used on other data.
-For example if the task required the use of the timestamp instead of the temperature then "timestamp" could be
-passed in instead of "temperature" which will provide details on the timestamp instead, this also works for the id as
-the task may not require the data to be grouped by an 'id'. Expected values for input are a Json array, and 2 strings
-and the expected output is a dictionary.
 
-### get_average()
-The get_average function takes in an array which contains values for the current key in the json_array_output
-iteration, it then checks to see if the array is empty if it is it will return nothing, this is to provide error
-checking and to provide optimization/speed as it will not execute the code below it if array is empty. To calculate
-the average the sum of the array was divided by the length of the array to always provide a precise calculation no
-matter the size of the array or the numerical data within. Expected value for input is an array containing integers and
-the expected output is an Integer.
 
-### get_median()
-The get_median function takes in an array which contains values for the current key in the json_array_output
-iteration, it then checks to see if the array is empty if it is it will return nothing, this is to provide error
-checking and to provide optimization/speed as it will not execute the code below it if array is empty. If the array
-however does have values inside it will sort the array values from smallest to largest and run modulo 2 on the
-length of the array which will provide insight to if there is an even or odd number of values. If there are an odd
-amount of variables it will return with a remainder of 1 which an if statement checks for, and will set the median
-number to the centre position of the array using the floor division operand (//2) which will divide the array by two
-and round down if necessary to make sure that the position is a whole number. The median number is then set to the
-value of this position. However if the remainder is 0 it means it is an even which requires some extra calculations.
-The median number is found by using the same floor division operand and then adding it to the position on its left
-which is to subtract 1 from the position found in the centre, these 2 values are then added together and divided by
-2 to provide the median number. The idea of how to find the median was mainly through how we as humans would
-calculate the median on paper, by finding the 2 centre values, adding them together and then dividing them by 2.
-Expected value for input is an array containing integers and the expected output is an integer.
+#### get_average()
 
-### get_mode()
+* The get_average function takes in an array which contains Integer values for the current key in the current
+ json_array_output iteration.
+* Error handling for empty arrays
+* Calculates the average by summing the array values and dividing them by the length of the array
+
+
+#### get_median()
+
+*The get_median function takes in an array which contains Integer values for the current key in the
+current json_array_output iteration
+* Error handling for empty arrays
+* The median function works similar to how a human would calculate the median by hand
+* The array is sorted in ascending order and then modulo 2 is applied on the length of the array which tells us whether
+its an even (0) or odd number (1).
+* If the number is odd the floor division operand (//) is used to divide the length of the array and give a integer which
+is then used as the position where the median value is
+* If the number is even the median is found by using the same floor division operand to retrieve the first intgeer
+ and by moving one position to the left in the array (-1) you can retrieve the second integer. These two integers are then
+ added together and divided by 2
+
+
+#### get_mode()
+
 The design for this function was yet again based off of how we as humans would calculate the mode, which is to count
 each value and keep a score of how many times each value has appeared, the highest score being the mode. With that
 in mind the get_mode function takes in an array that contains all values for the current key in the json_array_output
@@ -106,7 +108,9 @@ from the array passed in just converted to keys) which meet the minimum value of
 numbers that appear in the array. Expected value for input is an array containing integers and the expected output is an
 array of integers.
 
-### main()
+
+#### main()
+
 In this instance the main function is used to simply pass a Json array to the
 convert data function which then handles all of the conversion of the data
 and returns a Json array. Most of the work is handled by the convert data function

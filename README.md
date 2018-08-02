@@ -79,7 +79,7 @@ data instead of temperature
 
 #### get_median()
 
-*The get_median function takes in an array which contains Integer values for the current key in the
+* The get_median function takes in an array which contains Integer values for the current key in the
 current json_array_output iteration
 * Error handling for empty arrays
 * The median function works similar to how a human would calculate the median by hand
@@ -94,25 +94,19 @@ is then used as the position where the median value is
 
 #### get_mode()
 
-The design for this function was yet again based off of how we as humans would calculate the mode, which is to count
-each value and keep a score of how many times each value has appeared, the highest score being the mode. With that
-in mind the get_mode function takes in an array that contains all values for the current key in the json_array_output
-iteration. The first step is to check if the array is empty and if it is then nothing is returned to add error
-checking and to also optimize speeds for possible larger data. If the array has values in it, it will then create an
-empty dictionary and begin looping through the array adding the values as keys with 0 as the value if they are not
-already in the new dictionary, however if there is already a key in the dictionary of the same value it will simply
-add 1 to the keys value. Once the loop has finished it will calculate the maximum value of the keys and then use that
-value to find the mode. This is done by creating an array containing the keys that have values that meet the maximum
-value. For instance if there are a max of 3 values of the same type it will only add the keys (which are the values
-from the array passed in just converted to keys) which meet the minimum value of 3. Thus returning the most frequent
-numbers that appear in the array. Expected value for input is an array containing integers and the expected output is an
-array of integers.
+* The design for this function was yet again based off of how we as humans would calculate the mode on paper, which is to
+count each value and keep a score of how many times each value has appeared, the highest score being the mode
+* The get_mode function takes in an array which contains Integer values for the current key in the current
+ json_array_output iteration
+* Error handling for empty arrays
+* An empty dictionary is created and the array is put through a loop that adds the values as keys in the dictionary and
+a value of 0 if the keys are not already in the dictionary. If a value is already set as a key in the dictionary it will
+ then add 1 to its value basically creating a count. Basically making the values in the dictionary a key and adding 1
+ each time it appears
+* The maximum value of the keys values is generated and then only keys that have values that meet this maximum value can
+be added to an empty array which is then returned
 
 
 #### main()
 
-In this instance the main function is used to simply pass a Json array to the
-convert data function which then handles all of the conversion of the data
-and returns a Json array. Most of the work is handled by the convert data function
-so that if it were implemented into an up and running code base it could simply be
-called with the required arguments passed in, this also allows the function to be tested.
+* Simple main function that passes Json array to the convert_data function and prints out the results

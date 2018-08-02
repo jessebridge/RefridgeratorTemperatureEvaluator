@@ -27,7 +27,14 @@ from Json objects
                   {"id": "b", "timestamp": 1510128115, "temperature": 3.88}]
 ```
 
+## How to Run
+To run the program using pycharm just simply run the application, it already has a Json Array passed in through main to
+the functions so it will return and print out the correct output of the calculations for each fridge id.
 
+However if the code was to be implemented into an existing code base the main function can be removed and then the
+convert_data() needs to be called from another function passing in a Json Array for it to return a new Json Array.
+
+## How to Test
 
 
 ## Explanation of Functions

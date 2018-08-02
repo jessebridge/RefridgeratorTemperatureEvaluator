@@ -1,4 +1,4 @@
-def convert_data(json_object_data):
+def convert_data(json_array):
     """
     Passes Json array to be sorted and then run calculations
 
@@ -9,15 +9,25 @@ def convert_data(json_object_data):
     calculation methods such as median, mode and average, whereas if the data was not formatted it would require
     further steps to gather all data and compute the outputs for each id
     (eg. getting all temperatures for the fridge with id 'a').
-    :param json_object_data: Json Array
+    :param json_array: Json Array
     :return: Json Array
     """
-    sorted_fridge_data = sort_json_array(json_object_data, "id", "temperature")
-    print(sorted_fridge_data)
+    sorted_fridge_data = sort_json_array(json_array, "id", "temperature")
     return json_array_output(sorted_fridge_data)
 
 
 def json_array_output(sorted_fridge_data):
+    """
+    Passes the sorted data to each calculation method and returns the final Json array
+
+    The json_array_output function takes the sorted fridge data and puts it through a for loop which runs
+    all of the calculations for each key and their values. The for loop gets the all of values for 1 key at a time as an array and
+    passes them to the calculation functions, which then append the id and the results for each function to an empty array, it then
+    repeats this loop for each key in the dictionary from the sorted fridge data. The results that are returned are then rounded to
+    2nd decimal point as specified here so that the math functions were seperated to doing only math.
+    :param sorted_fridge_data: Dictionary
+    :return: Json array
+    """
     output_as_array = []
     for key, value in sorted_fridge_data.items():
         average = round(get_average(value), 2)
@@ -27,17 +37,24 @@ def json_array_output(sorted_fridge_data):
     return output_as_array
 
 
-def sort_json_array(json_object_data, id, key):
+def sort_json_array(json_array, id, key):
     """
-    Sorts the data with the same id into
+    Sorts the data with the same id into a dictionary with all values in a list
 
-    :param json_object_data:
+    The sort_json_array function takes in a Json array, a string as the id and a string as the key. The initial design
+    for the method only required the Json array and would statically implement what id and key was required, however after
+    some refinement i found that i could create this function to be able to be used for other sets of numerical data. The id
+    and key are now passed in as strings so that in future this function could be used on other data. For example
+    if the task required the use of the timestamp instead of the temperature then "timestamp" could be passed in instead
+    of "temperature" which will provide details on the timestamp instead, this also works for the id as the task may not
+    require the data to be grouped by an 'id'.
+    :param json_array:
     :param id: String
     :param key: String
     :return: Dictionary
     """
     sorted_data = {}
-    for element in json_object_data:
+    for element in json_array:
         if element[id] not in sorted_data.keys():
             sorted_data[element[id]] = [element[key]]
         else:
@@ -46,6 +63,17 @@ def sort_json_array(json_object_data, id, key):
 
 
 def get_average(sorted_fridge_data):
+    """
+    Gets the average number from the array it is passed
+
+    The get average function takes in the dictionary which contains 1 key and the all of the values of that key
+    in an array. The length of the array is then found to see if there is in fact anything in the array, if there isnt anything
+    in the array it will return nothing so that it doesnt continue trying to run excess code (to save time) and to stop it from
+    crashing. To calculate the average the sum of the array was divided by the length of the array to always provide a precise
+    calculation no matter the size of the array or the numerical data within.
+    :param sorted_fridge_data:
+    :return: average as float
+    """
     num_of_values = len(sorted_fridge_data)
     if num_of_values == 0:
         return None
@@ -96,7 +124,7 @@ def main():
     so that if it were implemented into an up and running code base it could simply be
     called with the required arguments passed in, this also allows the function to be tested.
     """
-    json_object_data = [{"id": "a", "timestamp": 1509493641, "temperature": 3.53},
+    json_array = [{"id": "a", "timestamp": 1509493641, "temperature": 3.53},
                         {"id": "b", "timestamp": 1509493642, "temperature": 4.13},
                         {"id": "c", "timestamp": 1509493643, "temperature": 3.96},
                         {"id": "a", "timestamp": 1509493644, "temperature": 3.63},
@@ -111,7 +139,7 @@ def main():
                         {"id": "c", "timestamp": 1510127892, "temperature": 3.36},
                         {"id": "a", "timestamp": 1510128112, "temperature": 3.67},
                         {"id": "b", "timestamp": 1510128115, "temperature": 3.88}]
-    output = convert_data(json_object_data)
+    output = convert_data(json_array)
     print(output)
 
 

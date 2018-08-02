@@ -17,10 +17,12 @@ def json_array_output(sorted_fridge_data):
     :return: Json array
     """
     output_as_array = []
+    #loop through each key and value
     for key, value in sorted_fridge_data.items():
         average = round(get_average(value), 2)
         median = round(get_median(value), 2)
         mode = get_mode(value)
+        # formatting for how the fridge data is stored is appended to an empty array
         output_as_array.append({"id": "{}".format(key), "average": average, "median": median, "mode": mode})
     return output_as_array
 
@@ -36,8 +38,10 @@ def sort_json_array(json_array, id, key):
     """
     sorted_data = {}
     for element in json_array:
+        # add id and value to empty dictionary
         if element[id] not in sorted_data.keys():
             sorted_data[element[id]] = [element[key]]
+        # if id exists in dictionary append value to id
         else:
             sorted_data[element[id]].append(element[key])
     return sorted_data
@@ -51,6 +55,7 @@ def get_average(sorted_fridge_data):
     :return: average as float
     """
     num_of_values = len(sorted_fridge_data)
+    # how to handle empty list
     if num_of_values == 0:
         return None
     else:
@@ -68,6 +73,7 @@ def get_median(sorted_fridge_data):
     :return: median as float
     """
     array_length = len(sorted_fridge_data)
+    # how to handle empty list
     if array_length == 0:
         return None
     else:

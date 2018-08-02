@@ -7,7 +7,8 @@
 * The only inputs are going to be Json arrays in the same form as the example given on the task sheet and not reading
 from Json objects
 ```
-Example input format
+
+                                    Example input format
 
                   [{"id": "a", "timestamp": 1509493641, "temperature": 3.53},
                   {"id": "b", "timestamp": 1509493642, "temperature": 4.13},

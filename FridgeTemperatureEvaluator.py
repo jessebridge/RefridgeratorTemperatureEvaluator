@@ -52,7 +52,6 @@ def calculate_median(json_file_as_dictionary):
 
 def calculate_mode(json_file_as_dictionary):
     for key, value in json_file_as_dictionary.items():
-        # print(value)
         calc = {}
         for item in value:
             if item not in calc.keys():
@@ -60,8 +59,10 @@ def calculate_mode(json_file_as_dictionary):
             else:
                 calc[item] += 1
         maximum_value = max(calc.values())
-        print(maximum_value)
-        print(calc)
+        modes = [key for key in calc.keys() if calc[key] == maximum_value]
+        print(key, modes)
+
+
 
 def main():
     json_object_data = [{"id": "a", "timestamp": 1509493641, "temperature": 3.53},

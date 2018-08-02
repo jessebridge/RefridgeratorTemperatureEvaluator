@@ -42,12 +42,12 @@ def sort_json_array(json_array, id, key):
     Sorts the data with the same id into a dictionary with all values in a list
 
     The sort_json_array function takes in a Json array, a string as the id and a string as the key. The initial design
-    for the method only required the Json array and would statically implement what id and key was required, however after
-    some refinement i found that i could create this function to be able to be used for other sets of numerical data. The id
-    and key are now passed in as strings so that in future this function could be used on other data. For example
-    if the task required the use of the timestamp instead of the temperature then "timestamp" could be passed in instead
-    of "temperature" which will provide details on the timestamp instead, this also works for the id as the task may not
-    require the data to be grouped by an 'id'.
+    for the method only required the Json array and would statically implement what id and key was required, however
+    after some refinement i found that i could create this function to be able to be used for other sets of numerical
+    data. The id and key are now passed in as strings so that in future this function could be used on other data.
+    For example if the task required the use of the timestamp instead of the temperature then "timestamp" could be
+    passed in insteadof "temperature" which will provide details on the timestamp instead, this also works for the id as
+    the task may not require the data to be grouped by an 'id'.
     :param json_array:
     :param id: String
     :param key: String
@@ -66,11 +66,11 @@ def get_average(sorted_fridge_data):
     """
     Gets the average number from the array it is passed
 
-    The get average function takes in the dictionary which contains 1 key and the all of the values of that key
-    in an array. The length of the array is then found to see if there is in fact anything in the array, if there isnt anything
-    in the array it will return nothing so that it doesnt continue trying to run excess code (to save time) and to stop it from
-    crashing. To calculate the average the sum of the array was divided by the length of the array to always provide a precise
-    calculation no matter the size of the array or the numerical data within.
+    The get_average function takes in an array which contains values for the current key in the json_array_output
+    iteration, it then checks to see if the array is empty if it is it will return nothing, this is to provide error
+    checking and to provide optimization/speed as it will not execute the code below it if array is empty. To calculate
+    the average the sum of the array was divided by the length of the array to always provide a precise calculation no
+    matter the size of the array or the numerical data within.
     :param sorted_fridge_data:
     :return: average as float
     """
@@ -85,21 +85,48 @@ def get_average(sorted_fridge_data):
 
 
 def get_median(sorted_fridge_data):
+    """
+    Gets the median value from the array it is passed
+
+    The get_median function takes in an array which contains values for the current key in the json_array_output
+    iteration, it then checks to see if the array is empty if it is it will return nothing, this is to provide error
+    checking and to provide optimization/speed as it will not execute the code below it if array is empty. If the array
+    however does have values inside it will sort the array values from smallest to largest and run modulo 2 on the
+    length of the array which will provide insight to if there is an even or odd number of values. If there are an odd
+    amount of variables it will return with a remainder of 1 which an if statement checks for, and will set the median
+    number to the centre position of the array using the floor division operand (//2) which will divide the array by two
+    and round down if necessary to make sure that the position is a whole number. The median number is then set to the
+    value of this position. However if the remainder is 0 it means it is an even which requires some extra calculations.
+    The median number is found by using the same floor division operand and then adding it to the position on its left
+    which is to subtract 1 from the position found in the centre, these 2 values are then added together and divided by
+    2 to provide the median number. The idea of how to find the median was mainly through how we as humans would
+    calculate the median on paper, by finding the 2 centre values, adding them together and then dividing them by 2.
+    :param sorted_fridge_data:
+    :return: median as float
+    """
     array_length = len(sorted_fridge_data)
     if array_length == 0:
         return None
     else:
         sorted_fridge_data.sort()
-    remainder = array_length % 2
-    if remainder == 1:
-        median_number = sorted_fridge_data[array_length // 2]
-    else:
-        median_number = (
-                            sorted_fridge_data[array_length // 2] + sorted_fridge_data[array_length // 2 - 1]) / 2
-    return median_number
+        remainder = array_length % 2
+        if remainder == 1:
+            median_number = sorted_fridge_data[array_length // 2]
+        else:
+            median_number = (sorted_fridge_data[array_length // 2] + sorted_fridge_data[array_length // 2 - 1]) / 2
+        return median_number
 
 
 def get_mode(sorted_fridge_data):
+    """
+    Gets the mode value from the array it is passed
+
+    The design for this function was yet again based off of how we as humans would calculate the mode, which is to count
+    each value and keep a score of how many times each value has appeared, the highest score being the mode. With that
+    in mind the get_mode function takes in
+    :param sorted_fridge_data:
+    :return: mode as a float
+    """
     if len(sorted_fridge_data) == 0:
         return None
     else:
@@ -125,20 +152,20 @@ def main():
     called with the required arguments passed in, this also allows the function to be tested.
     """
     json_array = [{"id": "a", "timestamp": 1509493641, "temperature": 3.53},
-                        {"id": "b", "timestamp": 1509493642, "temperature": 4.13},
-                        {"id": "c", "timestamp": 1509493643, "temperature": 3.96},
-                        {"id": "a", "timestamp": 1509493644, "temperature": 3.63},
-                        {"id": "c", "timestamp": 1509493645, "temperature": 3.96},
-                        {"id": "a", "timestamp": 1509493645, "temperature": 4.63},
-                        {"id": "a", "timestamp": 1509493646, "temperature": 3.53},
-                        {"id": "b", "timestamp": 1509493647, "temperature": 4.15},
-                        {"id": "c", "timestamp": 1509493655, "temperature": 3.95},
-                        {"id": "a", "timestamp": 1509493677, "temperature": 3.66},
-                        {"id": "b", "timestamp": 1510113646, "temperature": 4.15},
-                        {"id": "c", "timestamp": 1510127886, "temperature": 3.36},
-                        {"id": "c", "timestamp": 1510127892, "temperature": 3.36},
-                        {"id": "a", "timestamp": 1510128112, "temperature": 3.67},
-                        {"id": "b", "timestamp": 1510128115, "temperature": 3.88}]
+                  {"id": "b", "timestamp": 1509493642, "temperature": 4.13},
+                  {"id": "c", "timestamp": 1509493643, "temperature": 3.96},
+                  {"id": "a", "timestamp": 1509493644, "temperature": 3.63},
+                  {"id": "c", "timestamp": 1509493645, "temperature": 3.96},
+                  {"id": "a", "timestamp": 1509493645, "temperature": 4.63},
+                  {"id": "a", "timestamp": 1509493646, "temperature": 3.53},
+                  {"id": "b", "timestamp": 1509493647, "temperature": 4.15},
+                  {"id": "c", "timestamp": 1509493655, "temperature": 3.95},
+                  {"id": "a", "timestamp": 1509493677, "temperature": 3.66},
+                  {"id": "b", "timestamp": 1510113646, "temperature": 4.15},
+                  {"id": "c", "timestamp": 1510127886, "temperature": 3.36},
+                  {"id": "c", "timestamp": 1510127892, "temperature": 3.36},
+                  {"id": "a", "timestamp": 1510128112, "temperature": 3.67},
+                  {"id": "b", "timestamp": 1510128115, "temperature": 3.88}]
     output = convert_data(json_array)
     print(output)
 

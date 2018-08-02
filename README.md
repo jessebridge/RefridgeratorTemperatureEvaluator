@@ -6,7 +6,7 @@
 * The output was only required to be in the same format as a Json array and not output as a Json object
 * The only inputs are going to be Json arrays in the same form as the example given on the task sheet and not reading
 from Json objects
- *[{"id": "a", "timestamp": 1509493641, "temperature": 3.53},
+``` [{"id": "a", "timestamp": 1509493641, "temperature": 3.53},
                   {"id": "b", "timestamp": 1509493642, "temperature": 4.13},
                   {"id": "c", "timestamp": 1509493643, "temperature": 3.96},
                   {"id": "a", "timestamp": 1509493644, "temperature": 3.63},
@@ -20,7 +20,7 @@ from Json objects
                   {"id": "c", "timestamp": 1510127886, "temperature": 3.36},
                   {"id": "c", "timestamp": 1510127892, "temperature": 3.36},
                   {"id": "a", "timestamp": 1510128112, "temperature": 3.67},
-                  {"id": "b", "timestamp": 1510128115, "temperature": 3.88}]
+                  {"id": "b", "timestamp": 1510128115, "temperature": 3.88}]```
 
 
 

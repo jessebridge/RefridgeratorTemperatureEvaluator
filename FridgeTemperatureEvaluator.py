@@ -1,11 +1,12 @@
-from collections import Counter
-
-
 def convert_data(json_object_data):
     json_file_as_dictionary = load_json_file(json_object_data)
-    calculate_average(json_file_as_dictionary)
-    calculate_median(json_file_as_dictionary)
-    calculate_mode(json_file_as_dictionary)
+    for key, value in json_file_as_dictionary.items():
+        print(key, value)
+        avg_dict = round(get_average(value),2)
+        print(avg_dict)
+
+    get_median(json_file_as_dictionary)
+    get_mode(json_file_as_dictionary)
     # final_result = write_json_format(json_file_as_dictionary)
     # return final_result
 
@@ -18,21 +19,18 @@ def load_json_file(json_object_data):
             sorted_data[element["id"]] = [element["temperature"]]
         else:
             sorted_data[element["id"]].append(element["temperature"])
-    print(sorted_data)
     return sorted_data
 
 
-def calculate_average(json_file_as_dictionary):
-    for key, value in json_file_as_dictionary.items():
-        sum_of_values = sum(value)
-        num_of_values = len(value)
+def get_average(json_file_as_dictionary):
+    for value in json_file_as_dictionary:
+        sum_of_values = sum(json_file_as_dictionary)
+        num_of_values = len(json_file_as_dictionary)
         average = sum_of_values / num_of_values
-        average = round(average, 2)
-        print(key, average)
-        # need to consider how to return this either as a dictionary or variable
+    return average
 
 
-def calculate_median(json_file_as_dictionary):
+def get_median(json_file_as_dictionary):
     for key, value in json_file_as_dictionary.items():
         # sort values into smallest to largest
         value.sort()
@@ -50,7 +48,7 @@ def calculate_median(json_file_as_dictionary):
             # find number on either side of this position -1 and +1 then add the 2 values together and divide
 
 
-def calculate_mode(json_file_as_dictionary):
+def get_mode(json_file_as_dictionary):
     for key, value in json_file_as_dictionary.items():
         calc = {}
         for item in value:
@@ -61,7 +59,6 @@ def calculate_mode(json_file_as_dictionary):
         maximum_value = max(calc.values())
         modes = [key for key in calc.keys() if calc[key] == maximum_value]
         print(key, modes)
-
 
 
 def main():
@@ -81,7 +78,7 @@ def main():
                         {"id": "a", "timestamp": 1510128112, "temperature": 3.67},
                         {"id": "b", "timestamp": 1510128115, "temperature": 3.88}]
     final_result = convert_data(json_object_data)
-    print(final_result)
+    # print(final_result)
 
 
 main()

@@ -1,12 +1,16 @@
 def convert_data(json_object_data):
     fridge_data_as_list = sort_json_array(json_object_data, "id", "temperature")
+    return json_array_output(fridge_data_as_list)
+
+
+def json_array_output(fridge_data_as_list):
+    output_as_array = []
     for key, value in fridge_data_as_list.items():
         average = round(get_average(value), 2)
         median = round(get_median(value), 2)
         mode = get_mode(value)
-        print(average, median, mode)
-        # final_result = write_json_format(fridge_data_as_list)
-        # return final_result
+        output_as_array.append({"id": "{}".format(key), "average": average, "median": median, "mode": mode})
+    return output_as_array
 
 
 def sort_json_array(json_object_data, id, key):
@@ -77,8 +81,8 @@ def main():
                         {"id": "c", "timestamp": 1510127892, "temperature": 3.36},
                         {"id": "a", "timestamp": 1510128112, "temperature": 3.67},
                         {"id": "b", "timestamp": 1510128115, "temperature": 3.88}]
-    final_result = convert_data(json_object_data)
-    # print(final_result)
+    output = convert_data(json_object_data)
+    print(output)
 
 
 main()

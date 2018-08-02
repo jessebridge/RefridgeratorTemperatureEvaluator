@@ -123,9 +123,18 @@ def get_mode(sorted_fridge_data):
 
     The design for this function was yet again based off of how we as humans would calculate the mode, which is to count
     each value and keep a score of how many times each value has appeared, the highest score being the mode. With that
-    in mind the get_mode function takes in
+    in mind the get_mode function takes in an array that contains all values for the current key in the json_array_output
+    iteration. The first step is to check if the array is empty and if it is then nothing is returned to add error
+    checking and to also optimize speeds for possible larger data. If the array has values in it, it will then create an
+    empty dictionary and begin looping through the array adding the values as keys with 0 as the value if they are not
+    already in the new dictionary, however if there is already a key in the dictionary of the same value it will simply
+    add 1 to the keys value. Once the loop has finished it will calculte the maximum value of the keys and then use that
+    value to find the mode. This is done by creating an array containing the keys that have values that meet the maximum
+    value. For instance if there are a max of 3 values of the same type it will only add the keys (which are the values
+    from the array passed in just converted to keys) which meet the minimum value of 3. Thus returning the most frequent
+    numbers that appear in the array.
     :param sorted_fridge_data:
-    :return: mode as a float
+    :return: mode as array
     """
     if len(sorted_fridge_data) == 0:
         return None

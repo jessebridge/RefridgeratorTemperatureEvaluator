@@ -2,10 +2,11 @@ def convert_data(json_object_data):
     json_file_as_dictionary = load_json_file(json_object_data)
     for key, value in json_file_as_dictionary.items():
         print(key, value)
-        avg_dict = round(get_average(value),2)
-        print(avg_dict)
+        average = round(get_average(value), 2)
+        median = round(get_median(value), 2)
+        print("median below")
+        print(median)
 
-    get_median(json_file_as_dictionary)
     get_mode(json_file_as_dictionary)
     # final_result = write_json_format(json_file_as_dictionary)
     # return final_result
@@ -31,21 +32,16 @@ def get_average(json_file_as_dictionary):
 
 
 def get_median(json_file_as_dictionary):
-    for key, value in json_file_as_dictionary.items():
-        # sort values into smallest to largest
-        value.sort()
-        array_length = len(value)
-        remainder = array_length % 2
-        if remainder == 1:
-            median_number = array_length // 2
-            median_number = round(median_number, 2)
-            print(key, value[median_number])
-            return key, value[median_number]
-        else:
-            median_number = (value[array_length // 2] + value[array_length // 2 - 1]) / 2
-            median_number = round(median_number, 2)
-            print(key, median_number)
-            # find number on either side of this position -1 and +1 then add the 2 values together and divide
+    json_file_as_dictionary.sort()
+    array_length = len(json_file_as_dictionary)
+    remainder = array_length % 2
+    if remainder == 1:
+        median_number = json_file_as_dictionary[array_length // 2]
+    else:
+        median_number = (json_file_as_dictionary[array_length // 2] + json_file_as_dictionary[array_length // 2 - 1]) / 2
+    return median_number
+
+# find number on either side of this position -1 and +1 then add the 2 values together and divide
 
 
 def get_mode(json_file_as_dictionary):

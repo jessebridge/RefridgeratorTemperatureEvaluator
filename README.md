@@ -37,7 +37,7 @@ convert_data() needs to be called from another function passing in a Json Array 
 
 ### How to Test the Code
 
-* Some tests have been provided for this code, to run them you can simply run it through the editor or by using a 
+Some tests have been provided for this code, to run them you can simply run it through the editor or by using a 
 terminal and changing into the directory of the project then running "test_fridge_temp.py"
 
 ### Explanation of Functions

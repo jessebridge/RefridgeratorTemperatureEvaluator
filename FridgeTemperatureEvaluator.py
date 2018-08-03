@@ -22,8 +22,8 @@ def json_array_output(sorted_fridge_data):
     # loop through each key and value and calculate the required answers
     for key, value in sorted_fridge_data.items():
         # round each value down using round function
-        average = round(get_average(value), 2)
-        median = round(get_median(value), 2)
+        average = get_average(value)
+        median = get_median(value)
         mode = get_mode(value)
         # formatting for how the fridge data is stored is appended to an empty array
         output_as_array.append({"id": "{}".format(key), "average": average, "median": median, "mode": mode})
@@ -62,11 +62,14 @@ def get_average(sorted_fridge_data):
     if num_of_values == 0:
         return None
     else:
-        # divide sum of values by number of values
-        sum_of_values = sum(sorted_fridge_data)
-        num_of_values = len(sorted_fridge_data)
-        average = sum_of_values / num_of_values
-        return average
+        try:
+            # divide sum of values by number of values
+            sum_of_values = sum(sorted_fridge_data)
+            num_of_values = len(sorted_fridge_data)
+            average = sum_of_values / num_of_values
+            return round(average, 2)
+        except TypeError:
+            return None
 
 
 def get_median(sorted_fridge_data):
@@ -81,17 +84,21 @@ def get_median(sorted_fridge_data):
     if array_length == 0:
         return None
     else:
-        # sort array into ascending order
-        sorted_fridge_data.sort()
-        remainder = array_length % 2
-        # if odd number
-        if remainder == 1:
-            median_number = sorted_fridge_data[array_length // 2]
-        # if even number
-        else:
-            # find the middle position in the array round it down, add the position left of it and then divide by 2
-            median_number = (sorted_fridge_data[array_length // 2] + sorted_fridge_data[array_length // 2 - 1]) / 2
-        return median_number
+        try:
+            # sort array into ascending order
+            sorted_fridge_data.sort()
+            remainder = array_length % 2
+            # if odd number
+            if remainder == 1:
+                median_number = sorted_fridge_data[array_length // 2]
+            # if even number
+            else:
+                # find the middle position in the array round it down, add the position left of it and then divide by 2
+                median_number = (sorted_fridge_data[array_length // 2] + sorted_fridge_data[array_length // 2 - 1]) / 2
+            return round(median_number, 2)
+        except TypeError:
+            return None
+
 
 
 def get_mode(sorted_fridge_data):
@@ -108,8 +115,10 @@ def get_mode(sorted_fridge_data):
         calc = {}
         # loop through the array
         for item in sorted_fridge_data:
+            if isinstance(item,str):
+                return None
             # if key isn't stored stored in the calc dictionary, create one and add 0 as the value
-            if item not in calc.keys():
+            elif item not in calc.keys():
                 calc[item] = 0
             # if the key is already in the calc dictionary add 1 to the value
             else:

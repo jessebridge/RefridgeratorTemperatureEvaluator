@@ -73,7 +73,7 @@ data instead of temperature
 
 * The get_average function takes in an array which contains Integer values for the current key in the current
  json_array_output iteration.
-* Error handling for empty arrays
+* Error handling for empty arrays and TypeErrors
 * Calculates the average by summing the array values and dividing them by the length of the array
 
 
@@ -81,7 +81,7 @@ data instead of temperature
 
 * The get_median function takes in an array which contains Integer values for the current key in the
 current json_array_output iteration
-* Error handling for empty arrays
+* Error handling for empty arrays and TypeErrors
 * The median function works similar to how a human would calculate the median by hand
 * The array is sorted in ascending order and then modulo 2 is applied on the length of the array which tells us whether
 its an even (0) or odd number (1).
@@ -98,7 +98,7 @@ is then used as the position where the median value is
 count each value and keep a score of how many times each value has appeared, the highest score being the mode
 * The get_mode function takes in an array which contains Integer values for the current key in the current
  json_array_output iteration
-* Error handling for empty arrays
+* Error handling for empty arrays and TypeErrors
 * An empty dictionary is created and the array is put through a loop that adds the values as keys in the dictionary and
 a value of 0 if the keys are not already in the dictionary. If a value is already set as a key in the dictionary it will
  then add 1 to its value basically creating a count. Basically making the values in the dictionary a key and adding 1

@@ -100,7 +100,6 @@ def get_median(sorted_fridge_data):
             return None
 
 
-
 def get_mode(sorted_fridge_data):
     """
     Gets the mode value from the array it is passed
@@ -115,7 +114,7 @@ def get_mode(sorted_fridge_data):
         calc = {}
         # loop through the array
         for item in sorted_fridge_data:
-            if isinstance(item,str):
+            if isinstance(item, str):
                 return None
             # if key isn't stored stored in the calc dictionary, create one and add 0 as the value
             elif item not in calc.keys():
@@ -125,9 +124,13 @@ def get_mode(sorted_fridge_data):
                 calc[item] += 1
         # find the maximum key value in the dictionary
         maximum_value = max(calc.values())
-        # create an array of the keys that have a value equal to the maximum value
-        mode = [key for key in calc.keys() if calc[key] == maximum_value]
-        return mode
+        # handle if there is no mode
+        if maximum_value == 0:
+            return None
+        else:
+            # create an array of the keys that have a value equal to the maximum value
+            mode = [key for key in calc.keys() if calc[key] == maximum_value]
+            return mode
 
 
 def main():
